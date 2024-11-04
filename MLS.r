@@ -1,7 +1,9 @@
 library(readxl)
 library(ggplot2)
 
-MLS_C <- read.csv('C:/Users/Vilmar/Documents/MLS/MLS.csv')
+localpath <- "C:\Users\..."
+
+MLS_C <- read.csv(localpath)
 
 head(MLS_C)
 
@@ -9,22 +11,22 @@ head(MLS_C)
 summary(MLS_C)
 
 # Verificacao de Assistencia em comparacao ao valor InStat
-ggplot(aes(x = InStat.Index, y = Assistências),data = MLS_C) + 
+ggplot(aes(x = InStat.Index, y = AssistÃªncias),data = MLS_C) + 
   geom_point(alpha = 1/20,position = position_jitter(h = 0),color = 'black') + 
   xlim(200,300) + geom_line(stat = 'summary', fun.y = 'mean', vjust = -1, color ='green')
 
-# Pode se observar que atletas com muitas assistencias tem uma tendência a estarem mais a direita, ou seja, estão acima da média
-# Verificar se há possível correlação
+# Pode se observar que atletas com muitas assistencias tem uma tendÃªncia a estarem mais a direita, ou seja, estÃ£o acima da mÃ©dia
+# Verificar se hÃ¡ possÃ­vel correlaÃ§Ã£o
 
-cor(MLS_C$InStat.Index,MLS_C$Assistências)
+cor(MLS_C$InStat.Index,MLS_C$AssistÃªncias)
 
-# Identificando os jogadores com mais assistências e acima da média em ambos fatores
-qplot(x = Nome, data = subset(MLS_C, InStat.Index > 275 & Assistências >= 6))
+# Identificando os jogadores com mais assistÃªncias e acima da mÃ©dia em ambos fatores
+qplot(x = Nome, data = subset(MLS_C, InStat.Index > 275 & AssistÃªncias >= 6))
 
 
-# Correlação de 33%, é um fator de relevância média
+# CorrelaÃ§Ã£o de 33%, Ã© um fator de relevÃ¢ncia mÃ©dia
 
-# Queremos saber se jogadores com criação de jogadas tem influência na assistência para essa liga
+# Queremos saber se jogadores com criaÃ§Ã£o de jogadas tem influÃªncia na assistÃªncia para essa liga
 
 ggplot(aes(x = InStat.Index, y = Passes.chave),data = MLS_C) +
   geom_point(alpha = 1/20,position = position_jitter(h = 0),color = 'blue') +
@@ -36,15 +38,15 @@ cor(MLS_C$InStat.Index,MLS_C$Passes.chave)
 # Cerca de quarenta por cento, parece ser um fator a ser levado em conta
 
 
-ggplot(aes(x = Assistências, y = Gols),data = MLS_C) + geom_tile()
+ggplot(aes(x = AssistÃªncias, y = Gols),data = MLS_C) + geom_tile()
 
 # Verificando overlays
 qplot(x = InStat.Index, data = MLS_C) + scale_x_continuous(breaks = seq(180, 300, 10), limits = c(180, 290) )
 
-# Nome dos jogadores que mais criam jogadas pelo clube, e tem passes muito acima da média
+# Nome dos jogadores que mais criam jogadas pelo clube, e tem passes muito acima da mÃ©dia
 qplot(x = Nome, data = subset(MLS_C, InStat.Index > 275 & Passes.chave > 40))
 
-# Agora sera feito a análise dos que mais fazem gols
+# Agora sera feito a anÃ¡lise dos que mais fazem gols
 ggplot(aes(x = InStat.Index, y = Gols),data = MLS_C) + 
   geom_point(alpha = 1/20,position = position_jitter(h = 0),color = 'blue') + 
   xlim(200,300) + geom_line(stat = 'summary', fun.y = 'mean', vjust = -1, color ='green') + 
@@ -53,13 +55,13 @@ ggplot(aes(x = InStat.Index, y = Gols),data = MLS_C) +
 # Identificando os overlays
 qplot(x = Nome, data = subset(MLS_C, InStat.Index > 275 & Gols >= 9))
 
-# Correlação de Gols com valor Instat
+# CorrelaÃ§Ã£o de Gols com valor Instat
 cor(MLS_C$InStat.Index,MLS_C$Gols)
 
 
-# A criação de Boxplot dos valores, de gols, assistências, passes chaves e valor Instat seriam interessantes
+# A criaÃ§Ã£o de Boxplot dos valores, de gols, assistÃªncias, passes chaves e valor Instat seriam interessantes
 
 boxplot(MLS_C$InStat.Index, outline = FALSE, main = 'Boxplot do valor InStat', col = 'red')
 boxplot(MLS_C$Gols, main = 'Boxplot dos Gols', col = 'brown')
-boxplot(MLS_C$Assistências, main = 'Boxplot das Assistências', col = 'gray')
+boxplot(MLS_C$AssistÃªncias, main = 'Boxplot das AssistÃªncias', col = 'gray')
 boxplot(MLS_C$Passes.chave, main = 'Boxplot de Passes Chaves', col = 'yellow')
