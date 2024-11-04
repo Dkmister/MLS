@@ -1,9 +1,8 @@
 library(readxl)
 library(ggplot2)
 
-localpath <- "C:\Users\..."
 
-MLS_C <- read.csv(localpath)
+MLS_C <- read.csv('MLS.csv')
 
 head(MLS_C)
 
